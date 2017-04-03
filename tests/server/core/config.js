@@ -3,7 +3,7 @@
 var assert = require('proclaim');
 var mockery = require('mockery');
 
-describe('Shunter configuration', function() {
+describe('Shunter base configuration', function() {
 	describe('No environment specified', function() {
 		it('Should use development as the default environment', function() {
 			var config = require('../../../lib/config')(null, null, {});
