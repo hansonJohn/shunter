@@ -55,53 +55,27 @@ describe('Shunter base configuration,', function() {
 
 	describe('Parsing configuration,', function() {
 
+		var loggingStub;
+		var logging;
+
 		beforeEach(function() {
 			mockery.enable({
 				useCleanCache: true
 			});
+
+			loggingStub = require('../mocks/logging');
+			mockery.registerMock('./logging', loggingStub);
+			logging = loggingStub({});
 		});
+
 		afterEach(function() {
 			mockery.deregisterAll();
 			mockery.disable();
 		});
 
-
-		var defaultShunterConfig = {
-			argv: {
-				syslog: true,
-				logging: 'info'
-			},
-			env: {
-				host: function() {
-					return 'some.host.name';
-				}
-			},
-			log: require('../mocks/log'),
-			path: {
-				root: '/location-of-userland-files',
-				shunterRoot: './'
-			},
-			structure: {
-				logging: 'logging',
-				loggingFilters: 'filters',
-				loggingTransports: 'transports'
-			},
-			syslogAppName: 'foo'
-		};
-
-		var loggingStub = require('../mocks/logging');
-		mockery.registerMock('./logging', loggingStub);
-		var logging = loggingStub(defaultShunterConfig);
-
 		it('Should call the logging module if no logger is configured', function() {
-
-			var config = require('../../../lib/config')('production', null, {});
-console.log('==-=-=-=-=-=-=-=-')
-console.log(logging.getConfig.callCount)
-console.log(JSON.stringify(config));
-assert(logging.getConfig.calledOnce);
-
-
+			var config = require('../../../lib/config')(null, null, {});
+			assert(logging.getConfig.calledOnce);
 		});
 	});
 
