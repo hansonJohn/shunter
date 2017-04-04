@@ -3,10 +3,6 @@
 var assert = require('proclaim');
 var mockery = require('mockery');
 
-
-var sinon = require('sinon');
-
-
 describe('Shunter base configuration,', function() {
 	describe('No environment specified,', function() {
 		it('Should use development as the default environment', function() {
@@ -31,6 +27,7 @@ describe('Shunter base configuration,', function() {
 			});
 			mockery.registerMock('os', require('../mocks/os'));
 		});
+
 		afterEach(function() {
 			process.env.NODE_ENV = env;
 
@@ -54,7 +51,6 @@ describe('Shunter base configuration,', function() {
 	});
 
 	describe('Parsing configuration,', function() {
-
 		var loggingStub;
 		var logging;
 
@@ -74,7 +70,7 @@ describe('Shunter base configuration,', function() {
 		});
 
 		it('Should call the logging module if no logger is configured', function() {
-			var config = require('../../../lib/config')(null, null, {});
+			require('../../../lib/config')(null, null, {});
 			assert(logging.getConfig.calledOnce);
 		});
 	});
